@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	<div class="section pt-5 pb-0">
+		<div class="container">
+			<div class="row mb-5 justify-content-center">
+				<div class="col-lg-9">
+					<span class="fw-normal text-uppercase d-block mb-1">Categories</span>
+					<h2 class="heading">AVTO</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				{% for i in blogs %}
+					<div class="col-lg-9">
+						<div class="post-entry d-md-flex small-horizontal mb-5">
+							<div class="me-md-5 thumbnail mb-3 mb-md-0">
+								<img src="{{ i.banner_image.url }}" alt="Image" class="img-fluid">
+							</div>
+							<div class="content">
+								<div class="post-meta mb-3">
+									<a href="#" class="category">{{ i.category }}</a>,  <a href="#" class="category">Travel</a>
+									&mdash;
+									<span class="date">{{ i.created_at }}</span>
+								</div>
+								<h2 class="heading"><a href="single.html">{{ i.title }}</a></h2>
+								<p>{{ i.desciption|safe|slice:'0:150'}}</p>
+								<a href="#" class="post-author d-flex align-items-center">
+									<div class="author-pic">
+										<img src="{{ i.image_autor.url }}" alt="Image">
+									</div>
+									<div class="text">
+										<strong>{{ i.autor }}</strong>
+										<span>{{ i.position }}</span>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+                {% endfor %}
+			</div>
+			<div class="row align-items-center justify-content-center py-5">
+				<div class="col-lg-6 text-center">
+					<div class="custom-pagination">
+				        {% if blogs.has_previous %}
+							<a href="?page={{blogs.previous_page_number}}">Orqaga</a>
+						{% endif %}
+						{% for obj in blogs.paginator.page_range %}
+							{% if blogs.number == obj %}						
+						   		<a href="?page={{ obj }}" class="active">{{obj }}</a>
+						    {% endif %}
+							{% if blogs.number != obj %}						
+						   		<a href="?page={{ obj }}">{{obj }}</a>
+						    {% endif %}
+						{% endfor %}
+						{% if blogs.has_next %}
+						    <a href="?page={{ blogs.next_page_number}}">Oldinga</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
